@@ -5,13 +5,15 @@ from flask import Flask, session
 
 
 app = Flask(__name__)
-app.secret = str(uuid.uuid1)
-print("Secret = {secret}.".format(secret=app.secret))
+app.secret_key = '8asd234ASFASDQ$^^^^$RQAFD' # = str(uuid.uuid1())
+print("Secret = {secret}.".format(secret=app.secret_key))
 
 
 @app.route('/')
 def hello_world():
-    if 'visits' not in session:
+    if 'visits' in session:
+        v = session['visits']
+    else:
         v = 0
     v += 1
     session['visits'] = v
