@@ -1,13 +1,21 @@
 import sys
+import uuid
+
+from flask import Flask, session
 
 
-from flask import Flask
 app = Flask(__name__)
+app.secret = str(uuid.uuid1)
+print("Secret = {secret}.".format(secret=app.secret))
 
 
 @app.route('/')
 def hello_world():
-    return 'Hi, World!'
+    if 'visits' not in session:
+        v = 0
+    v += 1
+    session['visits'] = v
+    return 'Hi, World! {visits}'.format(**session)
 
 
 if __name__ == '__main__':
